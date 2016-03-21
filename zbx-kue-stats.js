@@ -25,6 +25,9 @@ var argv = require('yargs')
   //.default('q', 'q')
   .describe('q', 'Kue database prefix')
 
+.alias('k', 'key')
+  .describe('k', 'Return specific key value')
+
 .alias('t', 'timeout')
   .default('t', TIMEOUT)
   .describe('t', 'Connection timeout')
@@ -37,7 +40,7 @@ var argv = require('yargs')
   .epilog('copyright 2016')
   .argv;
 
-// Zabbix safe user parameters limitation
+// Override zabbix safe user parameters limitation
 if (argv.q === 'custom_1') {
   argv.q = '{q}';
   argv.prefix = '{q}';
@@ -76,8 +79,12 @@ function quit(err, res) {
     process.exit(1);
   }
 
-  for (var key in res) {
-    console.log(key + ':', res[key]);
+  if (argv.key) {
+    console.log(res[argv.key]);
+  } else {
+    for (var key in res) {
+      console.log(key + ':', res[key]);
+    }
   }
   process.exit(0);
 }
