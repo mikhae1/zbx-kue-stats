@@ -37,6 +37,12 @@ var argv = require('yargs')
   .epilog('copyright 2016')
   .argv;
 
+// Zabbix safe user parameters limitation
+if (argv.q === 'custom_1') {
+  argv.q = '{q}';
+  argv.prefix = '{q}';
+}
+
 var fname = '/tmp/zbx-kue-stats-' + argv.host + '-' + argv.db + '-' + argv.prefix + '.cache';
 
 var fstats;
