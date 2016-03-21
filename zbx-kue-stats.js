@@ -4,7 +4,7 @@ var fs = require('fs');
 var stats = require('./lib/stats');
 
 var TIMEOUT = 3000;
-var CACHE_TTL = 55 * 1000;
+var CACHE_TTL = 55;
 
 var argv = require('yargs')
   .usage('Usage: $0 [options] <metric>')
@@ -23,11 +23,15 @@ var argv = require('yargs')
 
 .alias('q', 'prefix')
   //.default('q', 'q')
-  .describe('q', 'Prefix')
+  .describe('q', 'Kue database prefix')
 
 .alias('t', 'timeout')
   .default('t', TIMEOUT)
   .describe('t', 'Connection timeout')
+
+.alias('l', 'cache_ttl')
+  .default('l', CACHE_TTL)
+  .describe('l', 'Cach invalidation time in seconds')
 
 .help('help')
   .epilog('copyright 2016')
@@ -44,7 +48,7 @@ try {
 }
 
 if (fstats) {
-  if (new Date() - fstats.mtime > CACHE_TTL) {
+  if (new Date() - fstats.mtime > argv.cache_ttl * 1000) {
     updateCache();
   } else {
     readFromCache();
@@ -75,4 +79,3 @@ function quit(err, res) {
 setTimeout(function() {
   quit(new Error('ETIMEOUT'));
 }, argv.t);
-
