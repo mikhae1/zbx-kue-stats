@@ -22,7 +22,7 @@ var argv = require('yargs')
   .describe('d', 'Database')
 
 .alias('q', 'prefix')
-  //.default('q', 'q')
+  .default('q', 'q')
   .describe('q', 'Kue database prefix')
 
 .alias('k', 'key')
