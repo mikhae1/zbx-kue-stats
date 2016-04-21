@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>2.0</version>
-    <date>2016-03-22T13:31:58Z</date>
+    <date>2016-04-21T09:02:36Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -1098,7 +1098,6 @@
                     <valuemap/>
                     <logtimefmt/>
                 </item>
-
                 <item>
                     <name>{$KUE_APP_NAME} - Kue: {$KUE_JOB_5} active jobs</name>
                     <type>0</type>
@@ -1314,7 +1313,6 @@
                     <valuemap/>
                     <logtimefmt/>
                 </item>
-
                 <item>
                     <name>{$KUE_APP_NAME} - Kue: {$KUE_JOB_6} active jobs</name>
                     <type>0</type>
@@ -1530,7 +1528,6 @@
                     <valuemap/>
                     <logtimefmt/>
                 </item>
-
             </items>
             <discovery_rules/>
             <macros/>
@@ -1538,6 +1535,55 @@
             <screens/>
         </template>
     </templates>
+    <triggers>
+        <trigger>
+            <expression>{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last()}&gt;0 and &#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last()}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#1)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#1)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#2)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#2)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#3)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#3)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#4)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#4)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#5)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#5)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#6)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#6)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#7)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#7)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#8)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#8)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#9)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#9)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#10)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#10)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#11)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#11)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#12)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#12)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#13)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#13)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#14)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#14)}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#15)} and&#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#15)}&gt;0</expression>
+            <name>Queue: heavy queue load</name>
+            <url/>
+            <status>0</status>
+            <priority>3</priority>
+            <description/>
+            <type>0</type>
+            <dependencies/>
+        </trigger>
+        <trigger>
+            <expression>{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].min(#60)}&lt;&gt;0</expression>
+            <name>Queue: queue was not cleared within one hour</name>
+            <url/>
+            <status>0</status>
+            <priority>3</priority>
+            <description/>
+            <type>0</type>
+            <dependencies/>
+        </trigger>
+        <trigger>
+            <expression>{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last()}&gt;0 and &#13;
+{Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last()}&gt;={Template Redis Kue:kue[{$KUE_DB},{$KUE_PREFIX},Total inactive].last(#1)}</expression>
+            <name>Queue [debug]: new jobs are recieved</name>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <dependencies/>
+        </trigger>
+    </triggers>
     <graphs>
         <graph>
             <name>Kue: Queued Jobs {$KUE_JOB_1}</name>
@@ -1859,8 +1905,6 @@
                 </graph_item>
             </graph_items>
         </graph>
-
-
         <graph>
             <name>Kue: Queued Jobs {$KUE_JOB_5}</name>
             <width>900</width>
@@ -1941,8 +1985,6 @@
                 </graph_item>
             </graph_items>
         </graph>
-
-
         <graph>
             <name>Kue: Queued Jobs {$KUE_JOB_6}</name>
             <width>900</width>
@@ -2023,8 +2065,6 @@
                 </graph_item>
             </graph_items>
         </graph>
-
-
         <graph>
             <name>Kue: Total Queued Jobs</name>
             <width>900</width>
